@@ -1,38 +1,38 @@
+using System.Diagnostics.CodeAnalysis;
+using APIDesafioBackEndIndustriall.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIDesafioBackEndIndustriall.Controller;
 
+[ApiController]
+[Route("[controller]")]
 public class UserController : Microsoft.AspNetCore.Mvc.Controller
 {
     [HttpGet]
-    [Route("/users")]
     public String GetUsers()
     {
         return $"All users here!";
     }
-    [HttpGet]
-    [Route("/users/{id}")]
+    [HttpGet("{id}")]
     public String GetUser(int id)
     {
         return $"User {id} here!";
     }
     
     [HttpPost]
-    [Route("/users/")]
-    public String CreateUser()
+    public String CreateUser([FromBody]User user)
     {
-        return $"Create user here!";
+        return $"user.name = {user.Name}\n" +
+               $"user.password = {user.Password}!";
     }
     
-    [HttpDelete]
-    [Route("/users/{id}")]
+    [HttpDelete("{id}")]
     public String DeleteUser(int id)
     {
         return $"Deleting user {id} here!";
     }
     
-    [HttpPut]
-    [Route("/users/{id}")]
+    [HttpPut("{id}")]
     public String UpdateUser(int id)
     {
         return $"Updating user {id} here!";
