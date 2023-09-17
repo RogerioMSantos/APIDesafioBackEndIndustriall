@@ -1,23 +1,21 @@
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace APIDesafioBackEndIndustriall.Models;
 
 public class User
 {
-    [Required]
-    public string Name { get; set; }
     
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+    
+    [Required] public string Name { get; set; } = null!;
 
     [Required]
-    [RegularExpression("^(?=.*\\d).{6,}$",ErrorMessage = "A senha deve conter pelo menos 6 caracteres e 1 número")][DataType (DataType.Password)]
-    public string Password { get; set; }
-    
-
-    public User()
-    {
-
-    }
+    [RegularExpression("^(?=.*\\d).{6,}$", ErrorMessage = "A senha deve conter pelo menos 6 caracteres e 1 número")]
+    [DataType(DataType.Password)]
+    public string Password { get; set; } = null!;
 
     public override string ToString()
     {

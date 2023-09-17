@@ -1,5 +1,5 @@
-using System.Diagnostics.CodeAnalysis;
 using APIDesafioBackEndIndustriall.Models;
+using APIDesafioBackEndIndustriall.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIDesafioBackEndIndustriall.Controller;
@@ -8,33 +8,62 @@ namespace APIDesafioBackEndIndustriall.Controller;
 [Route("[controller]")]
 public class UserController : Microsoft.AspNetCore.Mvc.Controller
 {
+    private readonly UserService _userService;
+
+    public UserController(UserService userService) =>
+        _userService = userService;
+
+
     [HttpGet]
-    public String GetUsers()
-    {
-        return $"All users here!";
-    }
-    [HttpGet("{id}")]
-    public String GetUser(int id)
-    {
-        return $"User {id} here!";
-    }
+    public async Task<IActionResult> GetUsers() =>   Ok(await _userService.GetAsync());
     
+
+    [HttpGet("{name}")]
+    public async Task<IActionResult> GetUser(string name)
+    {
+        var user = await _userService.GetAsync(name);
+        if (user is null) return NotFound();
+
+        return Ok(user);
+    }
+
     [HttpPost]
-    public String CreateUser([FromForm]User user)
+    public async Task<IActionResult> CreateUser([FromBody] User user)
     {
-        return $"user.name = {user.Name}\n" +
-               $"user.password = {user.Password}!";
+        
+        await _userService.CreateAsync(user);
+        return CreatedAtAction(nameof(GetUser), new {name = user.Name }, user);
     }
     
-    [HttpDelete("{id}")]
-    public String DeleteUser(int id)
+    [HttpPut("{name}")]
+    public async Task<IActionResult> UpdateUser(string name, [FromBody]User user)
     {
-        return $"Deleting user {id} here!";
+        
+        var oldUser = await _userService.GetAsync(name);
+        if (oldUser is null)
+        {
+            return NotFound();
+        }
+
+        user.Id = oldUser.Id;
+
+        await _userService.UpdateAsync(user);
+        return NoContent();
     }
     
-    [HttpPut("{id}")]
-    public String UpdateUser(int id)
+    [HttpDelete("{name}")]
+    public async Task<IActionResult> DeleteUser(string name)
     {
-        return $"Updating user {id} here!";
+        var user = await _userService.GetAsync(name);
+
+        if (user is null)
+        {
+            return NotFound();
+        }
+
+        await _userService.RemoveAsync(user);
+        return NoContent();
     }
+
+    
 }

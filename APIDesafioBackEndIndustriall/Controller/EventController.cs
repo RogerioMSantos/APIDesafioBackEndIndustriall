@@ -3,25 +3,25 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace APIDesafioBackEndIndustriall.Controller;
 
-
 [ApiController]
 [Route("[controller]")]
 public class EventController : Microsoft.AspNetCore.Mvc.Controller
 {
     // GET
     [HttpGet]
-    public String GetEvents()
+    public string GetEvents()
     {
-        return $"All Events here!";
+        return "All Events here!";
     }
+
     [HttpGet("{id}")]
-    public String GetEvent(int id)
+    public string GetEvent(int id)
     {
-        return $"All events here!";
+        return "All events here!";
     }
-    
+
     [HttpPost]
-    public String CreateEvent([FromBody]Event eventC)
+    public string CreateEvent([FromBody] Event eventC)
     {
         return $"event.description = {eventC.Description}\n" +
                $"event.Date = {eventC.Date}\n" +
@@ -29,15 +29,15 @@ public class EventController : Microsoft.AspNetCore.Mvc.Controller
                $"event.Responsable = {eventC.Responsable}\n" +
                $"event.Title = {eventC.Title}\n";
     }
-    
+
     [HttpDelete("{id}")]
-    public String DeleteEvent(int id)
+    public string DeleteEvent(int id)
     {
         return $"Deleting event {id} here!";
     }
-    
+
     [HttpPut("{id}")]
-    public String UpdateEvent(int id)
+    public string UpdateEvent(int id)
     {
         return $"Updating event {id} here!";
     }

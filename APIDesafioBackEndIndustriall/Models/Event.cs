@@ -1,42 +1,39 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 
 namespace APIDesafioBackEndIndustriall.Models;
 
 public class Event
 {
-    [MinLength(50,ErrorMessage = "O {0} não pode ter menos que {1} caracteres ")]
-    public string Title { get; set; }
     
-    [MaxLength(1000,ErrorMessage = "A {0} não pode exceder {1} caracteres ")]
-    public string Description { get; set; }
-
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
     private DateTime _date;
-    
-    [DefaultValue("01/01/2023")] 
-    public string  Date {
-        get
-        {
-            return _date.ToString("dd/MM/yyyy");
-        }
+
+    [MinLength(50, ErrorMessage = "O campo {0} não pode ter menos que {1} caracteres ")]
+    public string Title { get; set; } = null!;
+
+    [MaxLength(1000, ErrorMessage = "O campo {0} não pode exceder {1} caracteres ")]
+    public string Description { get; set; } = null!;
+
+    [DefaultValue("01/01/2023")]
+    public string Date
+    {
+        get => _date.ToString("dd/MM/yyyy");
         set
         {
-            if ( DateTime.TryParseExact(value, "dd/MM/yyyy", null, DateTimeStyles.None, out DateTime parsedDate))
-            {
+            if (DateTime.TryParseExact(value, "dd/MM/yyyy", null, DateTimeStyles.None, out var parsedDate))
                 _date = parsedDate;
-            }
             else
-            {
                 throw new ArgumentException("Formato de data inválido. Use o formato 'dd/MM/yyyy'.");
-            }
         }
-    } 
-    
+    }
+
     [Required(ErrorMessage = "O responsavel é obrigatório")]
-    public User Responsable { get; set; }
-    
-    [MinLength(1,ErrorMessage = "Requer pelo menos um participante")]
-    public User[] Participants { get; set; }
-    
+    public User Responsable { get; set; } = null!;
+
+    [MinLength(1, ErrorMessage = "Requer pelo menos um participante")]
+    public User[] Participants { get; set; } = null!;
 }
