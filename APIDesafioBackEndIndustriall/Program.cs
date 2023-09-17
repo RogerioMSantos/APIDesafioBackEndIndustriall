@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.OpenApi;
+using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +26,7 @@ builder.Services.AddSwaggerGen(c =>
                 Url = new Uri("http://opensource.org/licenses/MIT"),
             }
         });
+    c.MapType<DateTime>(() => new OpenApiSchema { Type = "string", Format = "date-time", Example = new OpenApiString(DateTime.Now.ToString("dd/MM/yyyy")) });
 });
 
 

@@ -20,7 +20,7 @@ public class UserController : Microsoft.AspNetCore.Mvc.Controller
     }
     
     [HttpPost]
-    public String CreateUser([FromBody]User user)
+    public String CreateUser([FromForm]User user)
     {
         return $"user.name = {user.Name}\n" +
                $"user.password = {user.Password}!";
