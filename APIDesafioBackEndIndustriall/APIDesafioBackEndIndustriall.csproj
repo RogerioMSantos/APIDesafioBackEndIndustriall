@@ -6,4 +6,26 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Compile Remove="Controller\UserController\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Controller\UserController\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="Controller\UserController\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Controller\UserController\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.0-preview.4.22251.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
+    </ItemGroup>
+    
+
 </Project>
