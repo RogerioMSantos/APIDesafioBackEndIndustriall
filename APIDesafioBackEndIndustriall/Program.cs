@@ -13,6 +13,7 @@ builder.Services.Configure<IndustriallDatabaseSettings>(
     builder.Configuration.GetSection("IndustriallDatabaseSettings"));
 builder.Services.AddDbContext<IndustriallContext>();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<EventService>();
 
 builder.Services.AddEndpointsApiExplorer();
 

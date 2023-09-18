@@ -1,50 +1,87 @@
 using APIDesafioBackEndIndustriall.Models;
+using APIDesafioBackEndIndustriall.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIDesafioBackEndIndustriall.Controller;
 
 [ApiController]
 [Route("[controller]")]
-public class EventController : Microsoft.AspNetCore.Mvc.Controller
+public class EventController(EventService eventService,UserController userController) : Microsoft.AspNetCore.Mvc.Controller
 {
-    // GET
     [HttpGet]
-    public string GetEvents()
-    {
-        return "All Events here!";
-    }
+    public async Task<IActionResult> GetEvents() =>   Ok(await eventService.GetAsync());
+    
 
     [HttpGet("{id}")]
-    public string GetEvent(int id)
+    public async Task<IActionResult> GetEvent(int id)
     {
-        return "All events here!";
+        var nEvent = await eventService.GetAsync(id);
+        if (nEvent is null) return NotFound();
+
+        return Ok(nEvent);
     }
+    
+    
 
     [HttpPost]
-    public string CreateEvent([FromBody] Event eventC)
+    public async Task<IActionResult> CreateEvent([FromBody] Event nEvent)
     {
-        return $"event.description = {eventC.Description}\n" +
-               $"event.Date = {eventC.Date}\n" +
-               $"event.Participants = {eventC.Participants[0]}\n" +
-               $"event.Responsable = {eventC.Responsable}\n" +
-               $"event.Title = {eventC.Title}\n";
+        var responsable = await GetUser(nEvent.Responsable!);
+        var participants = new List<User>();
+        foreach (var participant in nEvent.Participants)
+        {
+            participants.Add(await GetUser(participant));
+        }
+
+        nEvent.Participants = participants;
+        nEvent.Responsable = responsable;
+        await eventService.CreateAsync(nEvent);
+        return CreatedAtAction(nameof(GetEvent), new {id = nEvent.Id }, nEvent);
     }
 
-    [HttpDelete("{id}")]
-    public string DeleteEvent(int id)
+    private async Task<User> GetUser(User user)
     {
-        return $"Deleting event {id} here!";
+        using (var httpCliente = new HttpClient())
+        {
+            var responsableResponse = await userController.GetUser(user.Id);
+            var responsableResult = responsableResponse as ObjectResult;
+            Task<User>? responsableUser = null;
+            if (responsableResult != null && responsableResult.StatusCode == 200)
+            {
+                responsableUser = responsableResult.Value as Task<User>;
+            }
+
+            return await responsableUser!;
+        }
+        
     }
 
     [HttpPut("{id}")]
-    public string UpdateEvent(int id)
+    public async Task<IActionResult> UpdateEvent(int id, [FromBody]Event uEvent)
     {
-        return $"Updating event {id} here!";
+        
+        var oldEvent = await eventService.GetAsync(id);
+        if (oldEvent is null)
+        {
+            return NotFound();
+        }
+        
+        oldEvent.UpdateEvent(uEvent);
+        await eventService.UpdateAsync(oldEvent);
+        return NoContent();
     }
     
-    [HttpPut("Usuarios/{id}")]
-    public string ParticipantEvent(int id)
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteEvent(int id)
     {
-        return $"Participantes do evento {id}!";
+        var fEvent = await eventService.GetAsync(id);
+
+        if (fEvent is null)
+        {
+            return NotFound();
+        }
+        
+        await eventService.RemoveAsync(fEvent);
+        return NoContent();
     }
 }
