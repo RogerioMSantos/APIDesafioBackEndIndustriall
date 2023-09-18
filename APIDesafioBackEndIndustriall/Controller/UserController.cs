@@ -44,10 +44,9 @@ public class UserController : Microsoft.AspNetCore.Mvc.Controller
         {
             return NotFound();
         }
-
-        user.Id = id;
-
-        await _userService.UpdateAsync(user);
+        
+        oldUser.UpdateUser(user);
+        await _userService.UpdateAsync(oldUser);
         return NoContent();
     }
     
@@ -60,7 +59,7 @@ public class UserController : Microsoft.AspNetCore.Mvc.Controller
         {
             return NotFound();
         }
-
+        
         await _userService.RemoveAsync(user);
         return NoContent();
     }

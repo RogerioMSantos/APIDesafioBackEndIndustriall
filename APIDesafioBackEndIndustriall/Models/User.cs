@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-
 namespace APIDesafioBackEndIndustriall.Models;
 
 public class User
@@ -20,5 +19,12 @@ public class User
     public override string ToString()
     {
         return $"Name: {Name}";
+    }
+
+    public void UpdateUser(User newUser)
+    {
+        Name = newUser.Name;
+        Password = newUser.Password;
+        
     }
 }
