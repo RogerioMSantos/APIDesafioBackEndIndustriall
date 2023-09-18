@@ -41,4 +41,10 @@ public class EventController : Microsoft.AspNetCore.Mvc.Controller
     {
         return $"Updating event {id} here!";
     }
+    
+    [HttpPut("Usuarios/{id}")]
+    public string ParticipantEvent(int id)
+    {
+        return $"Participantes do evento {id}!";
+    }
 }

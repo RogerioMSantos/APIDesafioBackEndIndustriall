@@ -6,16 +6,11 @@ using Microsoft.Extensions.Options;
 
 namespace APIDesafioBackEndIndustriall.Data;
 
-public class IndustriallContext : DbContext
+public class IndustriallContext(DbContextOptions<IndustriallContext> options,
+        IOptions<IndustriallDatabaseSettings> insdustrialDabaseSettings)
+    : DbContext(options)
 {
-    private readonly string _connect;
-    public IndustriallContext(DbContextOptions<IndustriallContext> options,
-        IOptions<IndustriallDatabaseSettings> insdustrialDabaseSettings) : base(options)
-    {
-        _connect = insdustrialDabaseSettings.Value.ConnectionString;
-        Console.Out.WriteLine(_connect);
-        Console.Out.WriteLine(new string('*',50));
-    }
+    private readonly string _connect = insdustrialDabaseSettings.Value.ConnectionString;
     public DbSet<User> Users { get; set; }
     public DbSet<Event> Events { get; set; }
 

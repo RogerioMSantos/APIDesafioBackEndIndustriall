@@ -18,43 +18,43 @@ public class UserController : Microsoft.AspNetCore.Mvc.Controller
     public async Task<IActionResult> GetUsers() =>   Ok(await _userService.GetAsync());
     
 
-    [HttpGet("{name}")]
-    public async Task<IActionResult> GetUser(string name)
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetUser(int id)
     {
-        var user = await _userService.GetAsync(name);
+        var user = await _userService.GetAsync(id);
         if (user is null) return NotFound();
 
         return Ok(user);
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateUser([FromBody] User user)
+    public async Task<IActionResult> CreateUser([FromForm] User user)
     {
         
         await _userService.CreateAsync(user);
-        return CreatedAtAction(nameof(GetUser), new {name = user.Name }, user);
+        return CreatedAtAction(nameof(GetUser), new {id = user.Id }, user);
     }
     
-    [HttpPut("{name}")]
-    public async Task<IActionResult> UpdateUser(string name, [FromBody]User user)
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateUser(int id, [FromBody]User user)
     {
         
-        var oldUser = await _userService.GetAsync(name);
+        var oldUser = await _userService.GetAsync(id);
         if (oldUser is null)
         {
             return NotFound();
         }
 
-        user.Id = oldUser.Id;
+        user.Id = id;
 
         await _userService.UpdateAsync(user);
         return NoContent();
     }
     
-    [HttpDelete("{name}")]
-    public async Task<IActionResult> DeleteUser(string name)
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteUser(int id)
     {
-        var user = await _userService.GetAsync(name);
+        var user = await _userService.GetAsync(id);
 
         if (user is null)
         {
@@ -64,6 +64,5 @@ public class UserController : Microsoft.AspNetCore.Mvc.Controller
         await _userService.RemoveAsync(user);
         return NoContent();
     }
-
     
 }
