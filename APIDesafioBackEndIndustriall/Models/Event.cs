@@ -34,7 +34,7 @@ public class Event
     }
 
     [Required(ErrorMessage = "O responsavel é obrigatório")]
-    public User? Responsable { get; set; } = null!;
+    public int? ResponsibleId { get; set; }
 
     [MinLength(1, ErrorMessage = "Requer pelo menos um participante")]
     public List<User> Participants { get; set; } = null!;
@@ -44,7 +44,7 @@ public class Event
         Date = uEvent.Date ?? Date;
         Title = uEvent.Title ?? Title;
         Description = uEvent.Description ?? Description;
-        Responsable = uEvent.Responsable ?? Responsable;
+        ResponsibleId = uEvent.ResponsibleId ?? ResponsibleId;
         Participants = uEvent.Participants ?? Participants;
     }
 }
