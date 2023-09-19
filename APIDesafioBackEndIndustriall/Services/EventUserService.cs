@@ -46,4 +46,11 @@ public class EventUserService(IndustriallContext context): Service<EventUser>(co
         context.EventsUsers.Remove(EventUser);
         await context.SaveChangesAsync();
     }
+    
+    public async Task RemoveAsyncEventoUsers(Event eEvent)
+    {
+        var enventUsers = context.EventsUsers.Where(eu => eu.EventId == eEvent.Id).ToList();
+        context.EventsUsers.RemoveRange(enventUsers);
+        await context.SaveChangesAsync();
+    }
 }

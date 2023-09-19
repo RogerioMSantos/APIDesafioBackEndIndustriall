@@ -33,18 +33,29 @@ public class Event
         }
     }
 
-    [Required(ErrorMessage = "O responsavel é obrigatório")]
+    // [Required(ErrorMessage = "O responsavel é obrigatório")]
     public int? ResponsibleId { get; set; }
 
     [MinLength(1, ErrorMessage = "Requer pelo menos um participante")]
     public List<User> Participants { get; set; } = null!;
 
-    public void UpdateEvent(Event uEvent)
+    private void UpdateEventBase(Event uEvent)
     {
         Date = uEvent.Date ?? Date;
         Title = uEvent.Title ?? Title;
         Description = uEvent.Description ?? Description;
         ResponsibleId = uEvent.ResponsibleId ?? ResponsibleId;
-        Participants = uEvent.Participants ?? Participants;
+    }
+    
+    public void UpdateEvent(Event uEvent)
+    {
+        UpdateEventBase(uEvent);
+        Participants = uEvent.Participants ;
+    }
+    
+    public void UpdateMaintainEvent(Event uEvent)
+    {
+        UpdateEventBase(uEvent);
+        Participants = uEvent.Participants;
     }
 }

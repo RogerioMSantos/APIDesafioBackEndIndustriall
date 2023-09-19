@@ -22,7 +22,7 @@ public class UserController(UserService userService) : Microsoft.AspNetCore.Mvc.
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateUser([FromForm] User user)
+    public async Task<IActionResult> CreateUser([FromBody] User user)
     {
         
         await userService.CreateAsync(user);

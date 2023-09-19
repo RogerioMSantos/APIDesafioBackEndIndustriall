@@ -27,7 +27,5 @@ public class IndustriallContext(DbContextOptions<IndustriallContext> options,
             .HasMany(u => u.Participants)
             .WithMany()
             .UsingEntity<EventUser>();
-
     }
-
 }

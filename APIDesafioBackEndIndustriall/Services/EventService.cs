@@ -21,15 +21,9 @@ public class EventService(IndustriallContext context) : Service<Event>(context)
 
     public async Task RemoveAsyncCascade(Event eEvent)
     {
-        await RemoveAsyncEventoUsers(eEvent);
         context.Events.Remove(eEvent);
         await context.SaveChangesAsync();
     }
     
-    private async Task RemoveAsyncEventoUsers(Event eEvent)
-    {
-        var enventUsers = context.EventsUsers.Where(eu => eu.EventId == eEvent.Id).ToList();
-        context.EventsUsers.RemoveRange(enventUsers);
-        await context.SaveChangesAsync();
-    }
+
 }

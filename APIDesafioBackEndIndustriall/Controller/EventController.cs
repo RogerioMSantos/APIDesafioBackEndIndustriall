@@ -12,7 +12,6 @@ public class EventController(EventService eventService
     [HttpGet]
     public async Task<IActionResult> GetEvents()
     {
-
         var lEvent = await eventService.GetAsync();
 
         foreach (var iEvent in lEvent)
@@ -23,7 +22,7 @@ public class EventController(EventService eventService
         return Ok(lEvent);
     }
 
-    private List<User> GetParticipants(Event Event) => eventUserService.GetUsers(Event);
+    private List<User> GetParticipants(Event @event) => eventUserService.GetUsers(@event);
 
 
 
@@ -31,13 +30,12 @@ public class EventController(EventService eventService
     public async Task<IActionResult> GetEvent(int id)
     {
         var nEvent = await eventService.GetAsync(id);
-            
+        if (nEvent is null) return BadRequest();
+        
         nEvent.Participants = GetParticipants(nEvent);
-
+        
         return Ok(nEvent);
     }
-    
-    
 
     [HttpPost]
     public async Task<IActionResult> CreateEvent([FromBody] Event nEvent)
@@ -59,16 +57,7 @@ public class EventController(EventService eventService
         await eventService.CreateAsync(nEvent);
         return CreatedAtAction(nameof(GetEvent),new {id = nEvent.Id},nEvent);
     }
-
-    private async Task<User?> GetUser(int user)
-    {
-        var fUser = await userService.GetAsync(user);
-        
-        return fUser;
-
-    }
     
-
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateEvent(int id, [FromBody]Event uEvent)
     {
@@ -78,8 +67,23 @@ public class EventController(EventService eventService
         {
             return NotFound();
         }
-        
+        await eventUserService.RemoveAsyncEventoUsers(oldEvent);
         oldEvent.UpdateEvent(uEvent);
+        await eventService.UpdateAsync(oldEvent);
+        return NoContent();
+    }
+    
+    [HttpPut("add/{id}")]
+    public async Task<IActionResult> UpdateEventAdd(int id, [FromBody]Event uEvent)
+    {
+        
+        var oldEvent = await eventService.GetAsync(id);
+        if (oldEvent is null)
+        {
+            return NotFound();
+        }
+        
+        oldEvent.UpdateMaintainEvent(uEvent);
         await eventService.UpdateAsync(oldEvent);
         return NoContent();
     }
@@ -94,7 +98,15 @@ public class EventController(EventService eventService
             return NotFound();
         }
         
+        await eventUserService.RemoveAsyncEventoUsers(fEvent);
         await eventService.RemoveAsyncCascade(fEvent);
         return NoContent();
+    }
+    
+    private async Task<User?> GetUser(int user)
+    {
+        var fUser = await userService.GetAsync(user);
+        
+        return fUser;
     }
 }
