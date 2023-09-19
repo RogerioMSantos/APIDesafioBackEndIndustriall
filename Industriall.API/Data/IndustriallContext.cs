@@ -1,10 +1,9 @@
-using APIDesafioBackEndIndustriall.Models;
+using Industriall.API.Models;
+using Industriall.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace APIDesafioBackEndIndustriall.Data;
+namespace Industriall.API.Data;
 
 public class IndustriallContext(DbContextOptions<IndustriallContext> options,
         IOptions<IndustriallDatabaseSettings> insdustrialDabaseSettings)

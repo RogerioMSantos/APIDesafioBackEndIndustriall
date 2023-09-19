@@ -1,7 +1,7 @@
-using APIDesafioBackEndIndustriall.Data;
-using APIDesafioBackEndIndustriall.Models;
-using APIDesafioBackEndIndustriall.Services;
-using Microsoft.EntityFrameworkCore;
+using Industriall.API.Data;
+using Industriall.Data.Models;
+using Industriall.API.Services;
+using Industriall.Identity.Data;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 
@@ -11,7 +11,10 @@ builder.Services.AddControllers();
 
 builder.Services.Configure<IndustriallDatabaseSettings>(
     builder.Configuration.GetSection("IndustriallDatabaseSettings"));
+
+
 builder.Services.AddDbContext<IndustriallContext>();
+builder.Services.AddDbContext<IdentityDataContext>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<EventService>();
 builder.Services.AddScoped<EventUserService>();

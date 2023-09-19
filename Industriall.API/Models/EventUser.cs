@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace APIDesafioBackEndIndustriall.Models;
+namespace Industriall.API.Models;
 
 public class EventUser
 {

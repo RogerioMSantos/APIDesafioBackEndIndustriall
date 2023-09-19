@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 
-namespace APIDesafioBackEndIndustriall.Models;
+namespace Industriall.API.Models;
 
 public class Event
 {

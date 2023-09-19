@@ -1,7 +1,7 @@
-using APIDesafioBackEndIndustriall.Data;
+using Industriall.API.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace APIDesafioBackEndIndustriall.Services;
+namespace Industriall.API.Services;
 
 public abstract class Service<T>(DbContext context)
 {

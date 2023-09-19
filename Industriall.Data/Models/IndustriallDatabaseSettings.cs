@@ -1,4 +1,4 @@
-namespace APIDesafioBackEndIndustriall.Models;
+namespace Industriall.Data.Models;
 
 public class IndustriallDatabaseSettings
 {

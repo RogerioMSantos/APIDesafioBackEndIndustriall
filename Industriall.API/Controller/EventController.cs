@@ -1,8 +1,8 @@
-using APIDesafioBackEndIndustriall.Models;
-using APIDesafioBackEndIndustriall.Services;
+using Industriall.API.Models;
+using Industriall.API.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace APIDesafioBackEndIndustriall.Controller;
+namespace Industriall.API.Controller;
 
 [ApiController]
 [Route("[controller]")]

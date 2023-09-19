@@ -1,8 +1,8 @@
-using APIDesafioBackEndIndustriall.Data;
-using APIDesafioBackEndIndustriall.Models;
+using Industriall.API.Data;
+using Industriall.API.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace APIDesafioBackEndIndustriall.Services;
+namespace Industriall.API.Services;
 
 public class EventService(IndustriallContext context) : Service<Event>(context)
 {
