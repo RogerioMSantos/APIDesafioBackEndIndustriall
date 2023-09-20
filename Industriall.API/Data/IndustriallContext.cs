@@ -23,8 +23,10 @@ public class IndustriallContext(DbContextOptions<IndustriallContext> options,
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Event>()
-            .HasMany(u => u.Participants)
+            .HasMany(e => e.Participants)
             .WithMany()
             .UsingEntity<EventUser>();
+        modelBuilder.Entity<User>()
+            .HasOne(u => u.IdentityUser);
     }
 }

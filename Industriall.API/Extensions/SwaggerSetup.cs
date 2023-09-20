@@ -63,7 +63,7 @@ public static class SwaggerSetup
         });
     }
 
-    public static void UseSwaggerUI(this WebApplication app)
+    public static void UseSwaggerUi(this WebApplication app)
     {
         app.UseSwaggerUI(options =>
         {

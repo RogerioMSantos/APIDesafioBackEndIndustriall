@@ -4,32 +4,32 @@ namespace Industriall.Application.DTOs.Response;
 
 public class UserLoginResponse
 {
-    public UserLoginResponse()
+    private UserLoginResponse()
     {
         Errors = new List<string>();
     }
 
-    public UserLoginResponse(bool Sucess, string accessToken, string refreshToken) : this()
+    public UserLoginResponse(bool success, string accessToken, string refreshToken) : this()
     {
         AccessToken = accessToken;
         RefreshToken = refreshToken;
     }
 
-    public UserLoginResponse(bool Sucess) : this()
+    public UserLoginResponse(bool success) : this()
     {
     }
 
-    public bool Sucess => Errors.Count == 0;
+    public bool Success => Errors.Count == 0;
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public string AccessToken { get; private set; }
+    public string AccessToken { get; private set; } = null!;
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public string RefreshToken { get; private set; }
+    public string RefreshToken { get; private set; } = null!;
 
     public List<string> Errors { get; }
 
-    public void Adderror(string error)
+    public void AddError(string error)
     {
         Errors.Add(error);
     }

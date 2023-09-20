@@ -30,10 +30,10 @@ public class EventUserService(IndustriallContext context) : Service<EventUser>(c
         return events;
     }
 
-    public List<User> GetUsers(Event Event)
+    public List<User> GetUsers(Event @event)
     {
         var usersIds = context.EventsUsers
-            .Where(x => x.EventId == Event.Id)
+            .Where(x => x.EventId == @event.Id)
             .Select(x => x.UserId)
             .ToList();
 
@@ -45,9 +45,9 @@ public class EventUserService(IndustriallContext context) : Service<EventUser>(c
     }
 
 
-    public override async Task RemoveAsync(EventUser EventUser)
+    public override async Task RemoveAsync(EventUser eventUser)
     {
-        context.EventsUsers.Remove(EventUser);
+        context.EventsUsers.Remove(eventUser);
         await context.SaveChangesAsync();
     }
 

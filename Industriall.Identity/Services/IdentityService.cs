@@ -1,31 +1,28 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
 using Industriall.Application.DTOs.Request;
 using Industriall.Application.DTOs.Response;
 using Industriall.Application.Interfaces;
+using Industriall.Application.Model;
 using Industriall.Identity.Configurations;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.VisualBasic;
 
 namespace Industriall.Identity.Services;
 
-public class IdentityService(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager,
+public class IdentityService(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager,
         IOptions<JwtOptions> jwtOptions)
     : IIdentityService
 {
     private JwtOptions _jwtOptions = jwtOptions.Value;
     
-    public async Task<List<IdentityUser>> GetAsync()
+    public async Task<List<ApplicationUser>> GetAsync()
     {
         return await userManager.Users.ToListAsync();
     }
     
-    public async Task<IdentityUser> GetAsync(ClaimsPrincipal userId)
+    public async Task<ApplicationUser> GetAsync(ClaimsPrincipal userId)
     {
         return (await userManager.GetUserAsync(userId))!;
     }
@@ -38,7 +35,7 @@ public class IdentityService(SignInManager<IdentityUser> signInManager, UserMana
     
     public async Task<UserRegisterResponse> RegisterUser(UserRegisterRequest userRegister)
     {
-        var identityUser = new IdentityUser
+        var identityUser = new ApplicationUser
         {
             UserName = userRegister.Email,
             Email = userRegister.Email,
@@ -68,13 +65,13 @@ public class IdentityService(SignInManager<IdentityUser> signInManager, UserMana
         if (!result.Succeeded)
         {
             if (result.IsLockedOut)
-                userLoginResponse.Adderror("Essa conta está bloqueada");
+                userLoginResponse.AddError("Essa conta está bloqueada");
             else if (result.IsNotAllowed)
-                userLoginResponse.Adderror("Essa conta não tem permissão para fazer login");
+                userLoginResponse.AddError("Essa conta não tem permissão para fazer login");
             else if (result.RequiresTwoFactor)
-                userLoginResponse.Adderror("É necessario confirmar o login no seu e-mail");
+                userLoginResponse.AddError("É necessario confirmar o login no seu e-mail");
             else
-                userLoginResponse.Adderror("Usuário ou senha estão incorretos");
+                userLoginResponse.AddError("Usuário ou senha estão incorretos");
         }
 
         return userLoginResponse;
@@ -94,7 +91,7 @@ public class IdentityService(SignInManager<IdentityUser> signInManager, UserMana
 
         return new UserLoginResponse
         (
-            Sucess: true,
+            success: true,
             accessToken:accessToken,
             refreshToken:refreshToken
         );
@@ -113,7 +110,7 @@ public class IdentityService(SignInManager<IdentityUser> signInManager, UserMana
         return new JwtSecurityTokenHandler().WriteToken(jwt);
     }
 
-    private async Task<IList<Claim>> GetClaims(IdentityUser user, bool adicionarClaimsUsuario)
+    private async Task<IList<Claim>> GetClaims(ApplicationUser user, bool adicionarClaimsUsuario)
     {
         var claims = await userManager.GetClaimsAsync(user);
 

@@ -2,13 +2,12 @@ using Industriall.API.Data;
 using Industriall.API.Extensions;
 using Industriall.API.Services;
 using Industriall.Application.Interfaces;
+using Industriall.Application.Model;
 using Industriall.Data.Models;
 using Industriall.Identity.Configurations;
 using Industriall.Identity.Data;
 using Industriall.Identity.Services;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.OpenApi.Any;
-using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +24,7 @@ builder.Services.Configure<JwtOptions>(
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<IndustriallContext>();
 builder.Services.AddDbContext<IdentityDataContext>();
-builder.Services.AddDefaultIdentity<IdentityUser>()
+builder.Services.AddDefaultIdentity<ApplicationUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<IdentityDataContext>()
     .AddDefaultTokenProviders();
@@ -35,6 +34,7 @@ builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<EventService>();
 builder.Services.AddScoped<EventUserService>();
 
+
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwagger();
@@ -42,7 +42,7 @@ builder.Services.AddSwagger();
 
 var app = builder.Build();
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUi();
 
 app.UseHttpsRedirection();
 app.UseAuthentication();

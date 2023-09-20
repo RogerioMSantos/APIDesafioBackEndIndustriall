@@ -30,7 +30,7 @@ public class IdentityUserController(IIdentityService userService) : ControllerBa
         if(!ModelState.IsValid)
             return BadRequest();
         var result = await userService.LoginUser(userLogin);
-        if (result.Sucess)
+        if (result.Success)
             return Ok(result);
         return Unauthorized(result);
     }

@@ -44,18 +44,18 @@ public class EventController(EventService eventService
         var responsible = await GetUser((int)nEvent.ResponsibleId);
 
         if (responsible is null) return NotFound();
-        // var participants = new List<User>();
-        // foreach (var participant in nEvent.Participants)
-        // {
-        //     var user = await GetUser(participant.Id);
-        //     if (user is null) return NotFound();
-        //     participants.Add(user);
-        // }
+        var participants = new List<User>();
+        foreach (var participant in nEvent.Participants)
+        {
+            var user = await GetUser(participant.Id);
+            if (user is null) return NotFound();
+            participants.Add(user);
+        }
 
-        // nEvent.Participants = participants;
-        nEvent.ResponsibleId = responsible.Id;
+        nEvent.Participants = participants;
         await eventService.CreateAsync(nEvent);
         return CreatedAtAction(nameof(GetEvent), new { id = nEvent.Id }, nEvent);
+        // return Ok();
     }
 
     [HttpPut("{id}")]

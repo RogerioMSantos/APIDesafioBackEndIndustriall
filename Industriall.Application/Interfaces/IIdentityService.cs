@@ -1,7 +1,7 @@
 using System.Security.Claims;
 using Industriall.Application.DTOs.Request;
 using Industriall.Application.DTOs.Response;
-using Microsoft.AspNetCore.Identity;
+using Industriall.Application.Model;
 
 namespace Industriall.Application.Interfaces;
 
@@ -11,9 +11,9 @@ public interface IIdentityService
 
     Task<UserLoginResponse> LoginUser(UserLoginRequest userRegister);
 
-    public Task<List<IdentityUser>> GetAsync();
+    public Task<List<ApplicationUser>> GetAsync();
 
-    public Task<IdentityUser> GetAsync(ClaimsPrincipal userId);
+    public Task<ApplicationUser> GetAsync(ClaimsPrincipal userId);
 
     public Task RemoveAsync(ClaimsPrincipal userId);
 }
