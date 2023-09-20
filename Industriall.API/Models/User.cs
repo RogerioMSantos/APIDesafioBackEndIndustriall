@@ -9,19 +9,14 @@ public class User
     public int Id { get; set; }
 
     public string? Name { get; set; }
-
-    [RegularExpression("^(?=.*\\d).{6,}$", ErrorMessage = "A senha deve conter pelo menos 6 caracteres e 1 número")]
-    [DataType(DataType.Password)]
-    public string? Password { get; set; }
-
-    public override string ToString()
-    {
-        return $"Name: {Name}";
-    }
+    
+    public string? LastName { get; set; }
+    
+    public string identityUserId{ get; set; }
 
     public void UpdateUser(User newUser)
     {
         Name = newUser.Name ?? Name;
-        Password = newUser.Password ?? Password;
+        LastName = newUser.LastName ?? LastName;
     }
 }

@@ -6,6 +6,8 @@ using Industriall.Application.DTOs.Response;
 using Industriall.Application.Interfaces;
 using Industriall.Identity.Configurations;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualBasic;
@@ -17,6 +19,23 @@ public class IdentityService(SignInManager<IdentityUser> signInManager, UserMana
     : IIdentityService
 {
     private JwtOptions _jwtOptions = jwtOptions.Value;
+    
+    public async Task<List<IdentityUser>> GetAsync()
+    {
+        return await userManager.Users.ToListAsync();
+    }
+    
+    public async Task<IdentityUser> GetAsync(ClaimsPrincipal userId)
+    {
+        return (await userManager.GetUserAsync(userId))!;
+    }
+    
+    public async Task RemoveAsync(ClaimsPrincipal userId)
+    {
+        var user = await GetAsync(userId);
+        await userManager.DeleteAsync(user);
+    }
+    
     public async Task<UserRegisterResponse> RegisterUser(UserRegisterRequest userRegister)
     {
         var identityUser = new IdentityUser
@@ -98,6 +117,7 @@ public class IdentityService(SignInManager<IdentityUser> signInManager, UserMana
     {
         var claims = await userManager.GetClaimsAsync(user);
 
+        claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
         claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id));
         claims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email!));
         claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
