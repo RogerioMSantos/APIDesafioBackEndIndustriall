@@ -1,7 +1,7 @@
-using Industriall.API.Models;
 using Industriall.Application.DTOs.Request;
 using Industriall.Application.DTOs.Response;
 using Industriall.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Industriall.API.Controller;
@@ -10,11 +10,10 @@ namespace Industriall.API.Controller;
 [Route("[controller]")]
 public class IdentityUserController(IIdentityService userService) : ControllerBase
 {
-
     [HttpPost("cadastro")]
     public async Task<ActionResult<UserRegisterResponse>> Register(UserRegisterRequest userRegister)
     {
-        if(!ModelState.IsValid)
+        if (!ModelState.IsValid)
             return BadRequest();
         var result = await userService.RegisterUser(userRegister);
         if (result.Sucess)
@@ -27,30 +26,31 @@ public class IdentityUserController(IIdentityService userService) : ControllerBa
     [HttpPost("login")]
     public async Task<ActionResult<UserLoginResponse>> Login(UserLoginRequest userLogin)
     {
-        if(!ModelState.IsValid)
+        if (!ModelState.IsValid)
             return BadRequest();
         var result = await userService.LoginUser(userLogin);
         if (result.Success)
             return Ok(result);
         return Unauthorized(result);
     }
-    
-    
+
+
     [HttpGet]
     public async Task<IActionResult> GetUsers()
     {
-        
         return Ok(await userService.GetAsync());
     }
-    
+
     [HttpGet("current")]
+    [Authorize]
     public async Task<IActionResult> GetUser()
     {
         var user = HttpContext.User;
         return Ok(await userService.GetAsync(HttpContext.User));
     }
-    
-    [HttpGet("delete")]
+
+    [HttpDelete("delete")]
+    [Authorize]
     public async Task<IActionResult> DeleteUser()
     {
         var user = HttpContext.User;

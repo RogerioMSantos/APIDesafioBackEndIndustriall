@@ -81,6 +81,7 @@ public class EventController(EventService eventService
         return NoContent();
     }
 
+    [Authorize]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteEvent(int id)
     {

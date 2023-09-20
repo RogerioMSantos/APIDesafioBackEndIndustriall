@@ -29,8 +29,10 @@ public static class SwaggerSetup
                     }
                 });
             c.MapType<DateTime>(() => new OpenApiSchema
-                { Type = "string", Format = "date-time", Example = new OpenApiString(DateTime.Now.ToString("dd/MM/yyyy")) });
-            
+            {
+                Type = "string", Format = "date-time", Example = new OpenApiString(DateTime.Now.ToString("dd/MM/yyyy"))
+            });
+
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 Description = @"JWT Authorization header using the Bearer scheme. 
@@ -41,8 +43,8 @@ public static class SwaggerSetup
                 Type = SecuritySchemeType.ApiKey,
                 Scheme = "Bearer"
             });
-            
-            c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
                 {
                     new OpenApiSecurityScheme
@@ -54,8 +56,7 @@ public static class SwaggerSetup
                         },
                         Scheme = "oauth2",
                         Name = "Bearer",
-                        In = ParameterLocation.Header,
-
+                        In = ParameterLocation.Header
                     },
                     new List<string>()
                 }

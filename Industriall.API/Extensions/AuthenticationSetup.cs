@@ -29,21 +29,24 @@ public static class AuthenticationSetup
         {
             options.Password.RequireDigit = true;
             options.Password.RequiredLength = 6;
+            options.Password.RequireLowercase = false;
+            options.Password.RequireNonAlphanumeric = false;
+            options.Password.RequireUppercase = false;
         });
 
         var tokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuer = false,
+            ValidateIssuer = true,
             ValidIssuer = configuration.GetSection("JwtOptions:Issuer").Value,
 
-            ValidateAudience = false,
+            ValidateAudience = true,
             ValidAudience = configuration.GetSection("JwtOptions:Audience").Value,
 
-            ValidateIssuerSigningKey = false,
+            ValidateIssuerSigningKey = true,
             IssuerSigningKey = securityKey,
 
-            RequireExpirationTime = false,
-            ValidateLifetime = false,
+            RequireExpirationTime = true,
+            ValidateLifetime = true,
 
             ClockSkew = TimeSpan.Zero
         };

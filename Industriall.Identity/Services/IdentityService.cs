@@ -15,24 +15,24 @@ public class IdentityService(SignInManager<ApplicationUser> signInManager, UserM
         IOptions<JwtOptions> jwtOptions)
     : IIdentityService
 {
-    private JwtOptions _jwtOptions = jwtOptions.Value;
-    
+    private readonly JwtOptions _jwtOptions = jwtOptions.Value;
+
     public async Task<List<ApplicationUser>> GetAsync()
     {
         return await userManager.Users.ToListAsync();
     }
-    
+
     public async Task<ApplicationUser> GetAsync(ClaimsPrincipal userId)
     {
         return (await userManager.GetUserAsync(userId))!;
     }
-    
+
     public async Task RemoveAsync(ClaimsPrincipal userId)
     {
         var user = await GetAsync(userId);
         await userManager.DeleteAsync(user);
     }
-    
+
     public async Task<UserRegisterResponse> RegisterUser(UserRegisterRequest userRegister)
     {
         var identityUser = new ApplicationUser
@@ -91,21 +91,21 @@ public class IdentityService(SignInManager<ApplicationUser> signInManager, UserM
 
         return new UserLoginResponse
         (
-            success: true,
-            accessToken:accessToken,
-            refreshToken:refreshToken
+            true,
+            accessToken,
+            refreshToken
         );
     }
 
     private string TokenGenerate(IEnumerable<Claim> claims, DateTime dataExpiracao)
     {
         var jwt = new JwtSecurityToken(
-            issuer:_jwtOptions.Issuer,
-            audience:_jwtOptions.Audience,
-            claims: claims,
-            notBefore: DateTime.Now,
-            expires: dataExpiracao,
-            signingCredentials:_jwtOptions.SigningCredentials);
+            _jwtOptions.Issuer,
+            _jwtOptions.Audience,
+            claims,
+            DateTime.Now,
+            dataExpiracao,
+            _jwtOptions.SigningCredentials);
 
         return new JwtSecurityTokenHandler().WriteToken(jwt);
     }
@@ -114,7 +114,7 @@ public class IdentityService(SignInManager<ApplicationUser> signInManager, UserM
     {
         var claims = await userManager.GetClaimsAsync(user);
 
-        claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
+        claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
         claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id));
         claims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email!));
         claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));

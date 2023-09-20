@@ -1,6 +1,5 @@
 using Industriall.API.Data;
 using Industriall.API.Models;
-using Industriall.Identity.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace Industriall.API.Services;

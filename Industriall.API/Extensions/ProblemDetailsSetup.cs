@@ -3,6 +3,7 @@ using Hellang.Middleware.ProblemDetails.Mvc;
 using ProblemDetailsOptions = Hellang.Middleware.ProblemDetails.ProblemDetailsOptions;
 
 namespace Industriall.API.Extensions;
+
 public static class ProblemDetailsSetup
 {
     public static void AddApiProblemDetails(this IServiceCollection services)
@@ -15,7 +16,8 @@ public static class ProblemDetailsSetup
                     return env.IsDevelopment() || env.IsStaging();
                 };
 
-                options.MapExceptionToStatusCodeWithMessage<UnauthorizedAccessException>(StatusCodes.Status401Unauthorized);
+                options.MapExceptionToStatusCodeWithMessage<UnauthorizedAccessException>(StatusCodes
+                    .Status401Unauthorized);
                 options.MapExceptionToStatusCodeWithMessage<ArgumentException>(StatusCodes.Status400BadRequest);
                 options.MapExceptionToStatusCodeWithMessage<ArgumentNullException>(StatusCodes.Status400BadRequest);
                 options.MapToStatusCode<NotImplementedException>(StatusCodes.Status501NotImplemented);
@@ -25,7 +27,8 @@ public static class ProblemDetailsSetup
             .AddProblemDetailsConventions();
     }
 
-    public static void MapExceptionToStatusCodeWithMessage<TException>(this ProblemDetailsOptions options, int statusCode) where TException : Exception
+    public static void MapExceptionToStatusCodeWithMessage<TException>(this ProblemDetailsOptions options,
+        int statusCode) where TException : Exception
     {
         options.Map<TException>(ex => new StatusCodeProblemDetails(statusCode)
         {
