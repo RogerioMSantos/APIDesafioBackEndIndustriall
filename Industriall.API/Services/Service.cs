@@ -1,4 +1,3 @@
-using Industriall.API.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace Industriall.API.Services;

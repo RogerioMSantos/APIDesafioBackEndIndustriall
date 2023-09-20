@@ -4,14 +4,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Industriall.API.Services;
 
-public class EventUserService(IndustriallContext context): Service<EventUser>(context)
+public class EventUserService(IndustriallContext context) : Service<EventUser>(context)
 {
-    public override async Task<List<EventUser>> GetAsync() =>
-        await context.EventsUsers.ToListAsync();
+    public override async Task<List<EventUser>> GetAsync()
+    {
+        return await context.EventsUsers.ToListAsync();
+    }
 
-    public override async Task<EventUser?> GetAsync(int id) =>
-        await context.EventsUsers.FirstOrDefaultAsync(x => x.Id ==id);
-    
+    public override async Task<EventUser?> GetAsync(int id)
+    {
+        return await context.EventsUsers.FirstOrDefaultAsync(x => x.Id == id);
+    }
+
     public List<Event> GetEvents(User user)
     {
         var eventIds = context.EventsUsers
@@ -25,7 +29,7 @@ public class EventUserService(IndustriallContext context): Service<EventUser>(co
 
         return events;
     }
-    
+
     public List<User> GetUsers(Event Event)
     {
         var usersIds = context.EventsUsers
@@ -39,14 +43,14 @@ public class EventUserService(IndustriallContext context): Service<EventUser>(co
 
         return users;
     }
-    
+
 
     public override async Task RemoveAsync(EventUser EventUser)
     {
         context.EventsUsers.Remove(EventUser);
         await context.SaveChangesAsync();
     }
-    
+
     public async Task RemoveAsyncEventoUsers(Event eEvent)
     {
         var enventUsers = context.EventsUsers.Where(eu => eu.EventId == eEvent.Id).ToList();

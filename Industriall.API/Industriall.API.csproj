@@ -4,28 +4,13 @@
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <RootNamespace>Idustriall.API</RootNamespace>
+        <RootNamespace>Industriall.API</RootNamespace>
     </PropertyGroup>
 
-    <ItemGroup>
-        <Compile Remove="Controller\UserController\**"/>
-        <Compile Remove="Models\UserModel.cs"/>
-    </ItemGroup>
 
     <ItemGroup>
-        <EmbeddedResource Remove="Controller\UserController\**"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Content Remove="Controller\UserController\**"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <None Remove="Controller\UserController\**"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0-rc.1.23421.29" />
+        <PackageReference Include="Hellang.Middleware.ProblemDetails" Version="6.5.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0-rc.1.23421.29"/>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0-rc.1.23421.29"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0-rc.1.23419.6">
             <PrivateAssets>all</PrivateAssets>
@@ -41,13 +26,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Industriall.Data\Industriall.Data.csproj" />
-      <ProjectReference Include="..\Industriall.Identity\Industriall.Identity.csproj" />
+        <ProjectReference Include="..\Industriall.Data\Industriall.Data.csproj"/>
+        <ProjectReference Include="..\Industriall.Identity\Industriall.Identity.csproj"/>
     </ItemGroup>
 
 
     <ItemGroup>
-      <Folder Include="Migrations\" />
+        <Folder Include="Migrations\"/>
     </ItemGroup>
 
 </Project>

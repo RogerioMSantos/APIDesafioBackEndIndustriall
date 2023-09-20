@@ -2,23 +2,22 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
+using Industriall.Application.DTOs.Request;
 
 namespace Industriall.API.Models;
 
 public class Event
 {
-    
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
-    
-    
     private DateTime _date;
 
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+
     [MinLength(50, ErrorMessage = "O campo {0} não pode ter menos que {1} caracteres ")]
-    public string? Title { get; set; } = null!;
+    public string? Title { get; set; }
 
     [MaxLength(1000, ErrorMessage = "O campo {0} não pode exceder {1} caracteres ")]
-    public string? Description { get; set; } = null!;
+    public string? Description { get; set; }
 
     [DefaultValue("01/01/2023")]
     public string? Date
@@ -46,13 +45,13 @@ public class Event
         Description = uEvent.Description ?? Description;
         ResponsibleId = uEvent.ResponsibleId ?? ResponsibleId;
     }
-    
+
     public void UpdateEvent(Event uEvent)
     {
         UpdateEventBase(uEvent);
-        Participants = uEvent.Participants ;
+        Participants = uEvent.Participants;
     }
-    
+
     public void UpdateMaintainEvent(Event uEvent)
     {
         UpdateEventBase(uEvent);

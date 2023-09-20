@@ -1,60 +1,51 @@
 using Industriall.API.Data;
-using Industriall.Data.Models;
+using Industriall.API.Extensions;
 using Industriall.API.Services;
+using Industriall.Application.Interfaces;
+using Industriall.Data.Models;
+using Industriall.Identity.Configurations;
 using Industriall.Identity.Data;
+using Industriall.Identity.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddAuthentication(builder.Configuration);
+builder.Services.AddApiProblemDetails();
+builder.Services.AddAuthorizationPolicies();
+
 
 builder.Services.Configure<IndustriallDatabaseSettings>(
     builder.Configuration.GetSection("IndustriallDatabaseSettings"));
-
-
+builder.Services.Configure<JwtOptions>(
+    builder.Configuration.GetSection("JwtOptions"));
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<IndustriallContext>();
 builder.Services.AddDbContext<IdentityDataContext>();
+builder.Services.AddDefaultIdentity<IdentityUser>()
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<IdentityDataContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.AddScoped<IIdentityService, IdentityService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<EventService>();
 builder.Services.AddScoped<EventUserService>();
 
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1",
-        new OpenApiInfo
-        {
-            Title = "APIIndustriall",
-            Description = "API de usuarios e eventos, desafio tecnico dado pela Instriall",
-            Version = "v1",
-            Contact = new OpenApiContact
-            {
-                Name = "Rogério Medeiros",
-                Url = new Uri("https://github.com/RogerioMSantos")
-            },
-            License = new OpenApiLicense
-            {
-                Name = "MIT",
-                Url = new Uri("http://opensource.org/licenses/MIT")
-            }
-        });
-    c.MapType<DateTime>(() => new OpenApiSchema
-        { Type = "string", Format = "date-time", Example = new OpenApiString(DateTime.Now.ToString("dd/MM/yyyy")) });
-});
+builder.Services.AddSwagger();
 
 
 var app = builder.Build();
 app.UseSwagger();
-app.UseSwaggerUI(options =>
-{
-    options.SwaggerEndpoint("/swagger/v1/swagger.json", "APIIndustriall v1");
-    options.RoutePrefix = string.Empty;
-});
+app.UseSwaggerUI();
 
-// app.UseHttpsRedirection();
-
+app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
-
 app.Run();

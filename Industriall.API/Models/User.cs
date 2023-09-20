@@ -5,15 +5,14 @@ namespace Industriall.API.Models;
 
 public class User
 {
-    
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
-    
-    public string? Name { get; set; } = null!;
-    
+
+    public string? Name { get; set; }
+
     [RegularExpression("^(?=.*\\d).{6,}$", ErrorMessage = "A senha deve conter pelo menos 6 caracteres e 1 número")]
     [DataType(DataType.Password)]
-    public string? Password { get; set; } = null!;
+    public string? Password { get; set; }
 
     public override string ToString()
     {
@@ -24,6 +23,5 @@ public class User
     {
         Name = newUser.Name ?? Name;
         Password = newUser.Password ?? Password;
-        
     }
 }
