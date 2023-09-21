@@ -11,18 +11,25 @@ APIDesafioBackEndIndustriall
 > Projeto desenvolvido para o desafio de estágio de da [Industriall](https://industriall.ai)
 
 <br/>
+
 # 👨‍💻 Executar a aplicação
+
 Primeiro precisamos ir até o diretório que deseja a aplicação e abrir o terminal
+
 ```bash
 # Clonar pasta do projeto
 > git clone https://github.com/RogerioMSantos/APIDesafioBackEndIndustriall
 ```
+
 Com o projeto clonado, precisamos acessar o diretorio ./Industrial.API
+
 ```bash
 # Entrar no diretorio ./Industrial.API
 > cd ./Industrial.API
 ```
+
 E por fim rodar o projeto
+
 ```bash
 > Rodar o projeto com dotnet run
 ```
@@ -33,18 +40,24 @@ E por fim rodar o projeto
 
 A aplicação possui as determinadas rotas:
 
+ [Swagger](http://localhost:5038)
+
 ### IdentityUser
 
 São as rotas relacionadas a autenticação de um usuário, desde o cadastro.
 ```
 /IdentityUser/cadastro
-post
+Post
+
 /IdentityUser/login
-post
+Post
+
 /IdentityUser
 Get
+
 /IdentityUser/current
 Get
+
 /IdentityUser/delete
 Delete
 ```
@@ -56,9 +69,9 @@ São as rotas relacionados as iformações de um usuário ja logado.
 ```
 /User
 Get e Post
+
 User/{id}
 Get, put e delete
-Para criar um usuário é necessario estar logado usando ao login ao qual ele está relacionado
 ```
 
 ### Event
@@ -67,6 +80,7 @@ São as rotas relacionados aos eventos, para registrar um responsável do evento
 ```
 /Event
 Get e post
+
 /Event/{id}
 Get, put e delete
 
