@@ -98,5 +98,4 @@ Esse projeto está sob licença MIT. Veja o arquivo [LICENÇA](LICENSE) para mai
 
 <br/>
 
-[⬆ Voltar ao topo](#nome-do-projeto)<br>
 
