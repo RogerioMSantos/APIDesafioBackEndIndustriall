@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy ASP.Net Core app to Azure Web App - Rogerio-IndustriallAPI
+name: Build and deploy ASP.Net Core app to Azure Web App - rogerio-industriallapi
 
 on:
   push:
@@ -51,7 +51,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'Rogerio-IndustriallAPI'
+          app-name: 'rogerio-industriallapi'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2C3B4486A38F453EA92249EE4E4C6804 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_12BC826F4AA14A448F267E3BDE33472B }}
           package: .
