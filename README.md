@@ -1,14 +1,6 @@
-# APIDesafioBackEndIndustriall
 <h1 align="center" style="color: green; font-weight: bold; font-size: 40px">
-PetLove
+APIDesafioBackEndIndustriall
 </h1>
-<div style="display: row">
-<img src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white" alt="Node">
-<img src="https://img.shields.io/badge/Express.js-404D59?style=for-the-badge" alt="Express">
-<img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="Typescript">
-<img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
-<img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL">
-</div>
 
 <br/>
 
@@ -19,9 +11,21 @@ PetLove
 > Projeto desenvolvido para o desafio de estágio de da [Industriall](https://industriall.ai)
 
 <br/>
-* O projeto está disponivel clicando [aqui]()
-* Para as requisições, utilizamos o [Swagger]().
-
+# 👨‍💻 Executar a aplicação
+Primeiro precisamos ir até o diretório que deseja a aplicação e abrir o terminal
+```bash
+# Clonar pasta do projeto
+> git clone https://github.com/RogerioMSantos/APIDesafioBackEndIndustriall
+```
+Com o projeto clonado, precisamos acessar o diretorio ./Industrial.API
+```bash
+# Entrar no diretorio ./Industrial.API
+> cd ./Industrial.API
+```
+E por fim rodar o projeto
+```bash
+> Rodar o projeto com dotnet run
+```
 <br/>
 
 
@@ -29,7 +33,9 @@ PetLove
 
 A aplicação possui as determinadas rotas:
 
-*IdentityUser*
+### IdentityUser
+
+São as rotas relacionadas a autenticação de um usuário, desde o cadastro.
 ```
 /IdentityUser/cadastro
 post
@@ -44,7 +50,9 @@ Delete
 ```
 
 
-*User*
+### User
+
+São as rotas relacionados as iformações de um usuário ja logado.
 ```
 /User
 Get e Post
@@ -53,7 +61,9 @@ Get, put e delete
 Para criar um usuário é necessario estar logado usando ao login ao qual ele está relacionado
 ```
 
-*Event*
+### Event
+
+São as rotas relacionados aos eventos, para registrar um responsável do evento é necessario antes criar as informações adicionais do usuário(rota /user) e pegar o id
 ```
 /Event
 Get e post
