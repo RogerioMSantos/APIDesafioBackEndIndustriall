@@ -12,17 +12,23 @@ APIDesafioBackEndIndustriall
 
 <br/>
 # 👨‍💻 Executar a aplicação
+
 Primeiro precisamos ir até o diretório que deseja a aplicação e abrir o terminal
+
 ```bash
 # Clonar pasta do projeto
 > git clone https://github.com/RogerioMSantos/APIDesafioBackEndIndustriall
 ```
+
 Com o projeto clonado, precisamos acessar o diretorio ./Industrial.API
+
 ```bash
 # Entrar no diretorio ./Industrial.API
 > cd ./Industrial.API
 ```
+
 E por fim rodar o projeto
+
 ```bash
 > Rodar o projeto com dotnet run
 ```
