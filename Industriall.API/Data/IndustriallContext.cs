@@ -17,7 +17,7 @@ public class IndustriallContext(DbContextOptions<IndustriallContext> options,
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(_connect);
+        optionsBuilder.UseSqlite(_connect);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

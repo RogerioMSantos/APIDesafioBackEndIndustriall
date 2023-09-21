@@ -14,6 +14,6 @@ public class IdentityDataContext(DbContextOptions<IdentityDataContext> options,
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(_connect);
+        optionsBuilder.UseSqlite(_connect);
     }
 }
