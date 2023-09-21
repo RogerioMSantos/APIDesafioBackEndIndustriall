@@ -55,3 +55,6 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2BFF49B83C6F419CA520799416AC1D0F }}
           package: .
+
+      - name: Run on Azure Web App
+        run: dotnet ./Industriall.API.dll
