@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'RogerioAPIIndustriall'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_38F381D8D8BD45CC943F6A8A920F7E19 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BD493770AE834E18B317E62239CA1B5E }}
           package: .
